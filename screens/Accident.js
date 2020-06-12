@@ -28,7 +28,7 @@ export default class Accident extends Component {
       accident: -1,
       flag: false,
       flag2: false,
-      accidentDate: new Date(),
+      accidentDate: '',
       accidentPlace: "",
       accidentReason: "",
       anotherParty: -1,
@@ -146,7 +146,7 @@ export default class Accident extends Component {
         >
           <Image
             source={require("../assets/logo.png")}
-            style={{ resizeMode: "contain", marginTop: 30 }}
+            style={{ resizeMode: "contain", height:'75%',marginTop:30}}
           />
         </View>
 
@@ -222,6 +222,10 @@ export default class Accident extends Component {
                       dateInput: {
                         marginLeft: 36,
                       },
+                      placeholderText:{
+                        fontSize: 16 ,
+                        color:'gray'
+                      }
                       // ... You can check the source to find the other keys.
                     }}
                     onDateChange={(date) => {

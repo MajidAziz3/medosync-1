@@ -11,6 +11,7 @@ import {
 } from "react-native";
 import { Icon, Button, H3, CheckBox, Left } from "native-base";
 import SignaturePad from "react-native-signature-pad";
+import SignatureScreen from 'react-native-signature-canvas';
 import ApolloClient from "apollo-boost";
 import { gql } from "apollo-boost";
 const { width } = Dimensions.get("window");
@@ -22,6 +23,7 @@ export default class Declartion extends Component {
     checked3: false,
     show: true,
     drawing: "",
+    enableScrollViewScroll: true
   };
 
   componentDidMount() {
@@ -32,6 +34,7 @@ export default class Declartion extends Component {
   };
 
   _signaturePadChange = ({ base64DataUrl }) => {
+    // console.log('base64DataUrl----->',base64DataUrl)
     this.setState({
       drawing: base64DataUrl,
     });
@@ -40,7 +43,7 @@ export default class Declartion extends Component {
     this.setState({ show: false, drawing: "" });
     setTimeout(() => {
       this.setState({ show: true });
-    }, 0);
+    }, Platform.OS == "android" ? 1000 : 0);
   }
   handleNext() {
     const { checked1, checked2, checked3, drawing } = this.state;
@@ -60,6 +63,9 @@ export default class Declartion extends Component {
       <KeyboardAvoidingView
         style={{ flex: 1 }}
         behavior={Platform.OS == "ios" ? "padding" : "height"}
+        onStartShouldSetResponderCapture={() => {
+          this.setState({ enableScrollViewScroll: true });
+        }}
       >
         <View
           style={{
@@ -72,10 +78,16 @@ export default class Declartion extends Component {
         >
           <Image
             source={require("../assets/logo.png")}
-            style={{ resizeMode: "contain", marginTop: 30 }}
+            style={{ resizeMode: "contain", height: '75%', marginTop: 30 }}
           />
         </View>
-        <ScrollView contentContainerStyle={styles.Container}>
+
+
+
+        <ScrollView contentContainerStyle={styles.Container}
+          nestedScrollEnabled={true}
+          scrollEnabled={this.state.enableScrollViewScroll}
+        >
           <View
             style={{
               borderColor: "skyblue",
@@ -276,30 +288,57 @@ export default class Declartion extends Component {
 
                   <Text>Agree</Text>
                 </View>
-                {/* signature area */}
-                {this.state.show ? (
-                  <SignaturePad
-                    onError={this._signaturePadError}
-                    onChange={this._signaturePadChange}
-                    style={styles.SignaturePad}
-                  />
-                ) : null}
 
-                <Button
-                  onPress={() => this.clear()}
-                  style={{
-                    justifyContent: "center",
-                    backgroundColor: "transparent",
-                    borderWidth: 1,
-                    borderColor: "red",
-                    borderRadius: 0,
-                    width: 100,
-                    alignSelf: "flex-end",
-                    marginTop: 10,
-                  }}
-                >
-                  <Text style={{ color: "red" }}>Clear</Text>
-                </Button>
+                {
+                  Platform.OS == 'android'
+                    ?
+                    <View style={{ height: 400, backgroundColor: 'green', padding: 5 }}
+                      onStartShouldSetResponderCapture={() => {
+                        this.setState({ enableScrollViewScroll: false });
+                      }}
+
+                    >
+                      <SignatureScreen onOK={signature => {
+                        console.log('signature', signature);
+                        this.setState({ drawing: signature });
+                      }} onEmpty={() => console.log('Empty')}
+                        autoClear={false} />
+                    </View>
+                    :
+
+                    // {
+                    this.state.show ? (
+                      <View style={{ height: 400, }}
+                        onStartShouldSetResponderCapture={() => {
+                        }}>
+                        <SignaturePad
+                          onError={this._signaturePadError}
+                          onChange={this._signaturePadChange}
+                          style={styles.SignaturePad}
+                        />
+                      </View>
+                    ) : null
+
+                  //  } 
+                }
+
+                {Platform.OS === 'android' ? null :
+                  <Button
+                    onPress={() => this.clear()}
+                    style={{
+                      justifyContent: "center",
+                      backgroundColor: "transparent",
+                      borderWidth: 1,
+                      borderColor: "red",
+                      borderRadius: 0,
+                      width: 100,
+                      alignSelf: "flex-end",
+                      marginTop: 10,
+                    }}
+                  >
+                    <Text style={{ color: "red" }}>Clear</Text>
+                  </Button>
+                }
                 {/* signature area */}
               </View>
             </View>

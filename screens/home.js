@@ -49,16 +49,16 @@ export default class home extends Component {
       title: "",
       forename: "",
       surname: "",
-      dob: new Date(),
+      dob: '',
       address: "",
       phone_number: "",
       private_patient: -1,
-      first_symtomps: new Date(),
-      first_consult: new Date(),
+      first_symtomps:'',
+      first_consult:'',
       related: -1,
-      related_date: new Date(),
+      related_date:'',
       name_of_doctor: "",
-      doctor_date: new Date(),
+      doctor_date: '',
       doctor_address: "",
     };
   }
@@ -206,7 +206,7 @@ export default class home extends Component {
         >
           <Image
             source={require("../assets/logo.png")}
-            style={{ resizeMode: "contain", marginTop: 30 }}
+            style={{ resizeMode: "contain", height:'75%',marginTop:30}}
           />
         </View>
         <ScrollView contentContainerStyle={styles.Container}>
@@ -594,6 +594,7 @@ export default class home extends Component {
                 style={{ width: width - 30, marginTop: 20 }}
                 date={this.state.dob}
                 mode="date"
+                maxDate={new Date()}
                 placeholder="Select date"
                 confirmBtnText="Confirm"
                 cancelBtnText="Cancel"
@@ -607,6 +608,17 @@ export default class home extends Component {
                   dateInput: {
                     marginLeft: 36,
                   },
+                  dateText: {
+                    color: '#000',
+                    placeholderTextColor: 'red',
+                    fontSize: 16 ,
+                    // fontFamily: 'Gilroy-Bold',
+                    numberOfLines: 1
+                  },
+                  placeholderText:{
+                    fontSize: 16 ,
+                    color:'gray'
+                  }
                   // ... You can check the source to find the other keys.
                 }}
                 onDateChange={(date) => {
@@ -635,6 +647,7 @@ export default class home extends Component {
                 <Input
                   style={{ paddingLeft: 12 }}
                   value={this.state.phone_number}
+                  keyboardType={'phone-pad'}
                   onChangeText={(e) => {
                     this.setState({ phone_number: e });
                   }}
@@ -713,6 +726,10 @@ export default class home extends Component {
                   dateInput: {
                     marginLeft: 36,
                   },
+                  placeholderText:{
+                    fontSize: 16 ,
+                    color:'gray'
+                  }
                   // ... You can check the source to find the other keys.
                 }}
                 onDateChange={(date) => {
@@ -745,6 +762,10 @@ export default class home extends Component {
                   dateInput: {
                     marginLeft: 36,
                   },
+                  placeholderText:{
+                    fontSize: 16 ,
+                    color:'gray'
+                  }
                   // ... You can check the source to find the other keys.
                 }}
                 onDateChange={(date) => {
@@ -802,6 +823,10 @@ export default class home extends Component {
                   dateInput: {
                     marginLeft: 36,
                   },
+                  placeholderText:{
+                    fontSize: 16 ,
+                    color:'gray'
+                  }
                   // ... You can check the source to find the other keys.
                 }}
                 onDateChange={(date) => {
@@ -869,6 +894,10 @@ export default class home extends Component {
                     dateInput: {
                       marginLeft: 36,
                     },
+                    placeholderText:{
+                      fontSize: 16 ,
+                      color:'gray'
+                    }
                     // ... You can check the source to find the other keys.
                   }}
                   onDateChange={(date) => {
