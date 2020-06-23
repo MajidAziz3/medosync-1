@@ -18,7 +18,7 @@ const client = new ApolloClient({
 const { width, height } = Dimensions.get("window");
 export default class Verficiation extends Component {
   data = async () => {
-    // console.log("i am called");
+    // console.log("i am called"); 
     // let query = gql`
     //   mutation {
     //     createPatient(
