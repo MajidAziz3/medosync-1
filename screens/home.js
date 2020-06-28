@@ -614,15 +614,6 @@ export default class home extends Component {
                   }}
                 />}
                 customStyles={{
-                  // dateIcon: {
-                  //   position: "absolute",
-                  //   left: 0,
-                  //   top: 4,
-                  //   marginLeft: 0,
-                  // },
-                  dateInput: {
-                    // marginLeft: 5,
-                  },
                   dateText: {
                     color: '#000',
                     placeholderTextColor: 'red',
@@ -634,12 +625,11 @@ export default class home extends Component {
                     fontSize: 16,
                     color: 'gray'
                   }
-                  // ... You can check the source to find the other keys.
                 }}
                 onDateChange={(date) => {
                   this.setState({ dob: moment(date, format2).format(format2) });
                 }}
-              /> */}
+              /> 
 
               <Item floatingLabel style={{ marginTop: 10 }}>
                 <Label style={{ marginHorizontal: 13, fontSize: 16 }}>
