@@ -24,7 +24,7 @@ export default class Navigation extends Component {
               headerTintColor: "skyblue",
 
               headerTitle: (
-                <Image
+                <Image 
                   style={{ width: 120, height: 40 }}
                   source={{
                     uri:

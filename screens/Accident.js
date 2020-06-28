@@ -11,10 +11,11 @@ import {
 import { Item, Input, Label, Right, Button, Icon, Left } from "native-base";
 
 import DatePicker from "react-native-datepicker";
+import { format, format2 } from "./home";
 
 const { width } = Dimensions.get("window");
 import moment from "moment";
-
+import { Ionicons, FontAwesome } from '@expo/vector-icons';
 import RadioForm from "react-native-simple-radio-button";
 var radio_props = [
   { label: "No", value: 0 },
@@ -146,7 +147,7 @@ export default class Accident extends Component {
         >
           <Image
             source={require("../assets/logo.png")}
-            style={{ resizeMode: "contain", height:'75%',marginTop:30}}
+            style={{ resizeMode: "contain", height: '75%', marginTop: 30 }}
           />
         </View>
 
@@ -205,31 +206,43 @@ export default class Accident extends Component {
                   >
                     Date of accident/injury: (DD-MM-YYYY):
                   </Label>
+
                   <DatePicker
-                    style={{ width: width - 30, marginTop: 20 }}
+                    style={{ width: width - 45, marginVertical: 20, marginLeft: 13, }}
                     date={this.state.accidentDate}
-                    mode="date"
+                    mode="datetime"
+                    androidMode='spinner'
                     placeholder="Select date"
                     confirmBtnText="Confirm"
                     cancelBtnText="Cancel"
+                    format={format2}
+
+                    iconComponent={<FontAwesome name="calendar-check-o" size={25} color="rgba(0,0,0,0.7)"
+                    style={{
+                      position: "absolute",
+                      left: 10,
+                      top: 4,
+                      marginLeft: 0,
+                    }}
+                  />}
                     customStyles={{
-                      dateIcon: {
-                        position: "absolute",
-                        left: 0,
-                        top: 4,
-                        marginLeft: 0,
-                      },
-                      dateInput: {
-                        marginLeft: 36,
-                      },
-                      placeholderText:{
-                        fontSize: 16 ,
-                        color:'gray'
+                      // dateIcon: {
+                      //   position: "absolute",
+                      //   left: 0,
+                      //   top: 4,
+                      //   marginLeft: 0,
+                      // },
+                      // dateInput: {
+                      //   marginLeft: 36,
+                      // },
+                      placeholderText: {
+                        fontSize: 16,
+                        color: 'gray'
                       }
                       // ... You can check the source to find the other keys.
                     }}
                     onDateChange={(date) => {
-                      this.setState({ accidentDate: date });
+                      this.setState({ accidentDate: moment(date, format2).format(format2) });
                     }}
                   />
                 </View>

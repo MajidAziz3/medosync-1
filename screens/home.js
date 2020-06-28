@@ -25,10 +25,13 @@ import {
 import moment from "moment";
 import SmoothPinCodeInput from "react-native-smooth-pincode-input";
 import RadioForm from "react-native-simple-radio-button";
+import { Ionicons, FontAwesome } from '@expo/vector-icons';
 var radio_props = [
   { label: "No", value: 0 },
   { label: "Yes", value: 1 },
 ];
+export const format = "YYYY-MM-DD" //yyyy-mm-dd hh:mm
+export const format2 = "YYYY-MM-DD hh:mm"
 const { width } = Dimensions.get("window");
 export default class home extends Component {
   constructor(props) {
@@ -53,10 +56,10 @@ export default class home extends Component {
       address: "",
       phone_number: "",
       private_patient: -1,
-      first_symtomps:'',
-      first_consult:'',
+      first_symtomps: '',
+      first_consult: '',
       related: -1,
-      related_date:'',
+      related_date: '',
       name_of_doctor: "",
       doctor_date: '',
       doctor_address: "",
@@ -133,6 +136,7 @@ export default class home extends Component {
       doctor_date,
       doctor_address,
     };
+
     if (
       fever !== -1 &&
       cough !== -1 &&
@@ -206,7 +210,7 @@ export default class home extends Component {
         >
           <Image
             source={require("../assets/logo.png")}
-            style={{ resizeMode: "contain", height:'75%',marginTop:30}}
+            style={{ resizeMode: "contain", height: '75%', marginTop: 30 }}
           />
         </View>
         <ScrollView contentContainerStyle={styles.Container}>
@@ -590,80 +594,50 @@ export default class home extends Component {
               >
                 Date of Birth
               </Label>
-              <DatePicker1
-                      style={{width: '100%'}}
-                      date={this.state.date}
-                      mode="date"
-                      androidMode="spinner"
-                      format="ll"
-                      placeholder="Date of Birth"
-                      format="YYYY-MM-DD"
-                      confirmBtnText="Confirm"
-                      minDate={1960}
-                      maxDate={new Date()}
-                      cancelBtnText="Cancel"
-                      allowFontScaling
-                      customStyles={{
-                        placeholderText: {
-                          // fontFamily: sfRegular,
-                          fontSize: 18,
-                          // color: 'white',
-                          // left: -133,
-                          numberOfLines: 1,
-                        },
-                        dateInput: {
-                          height: '100%',
-                          borderWidth: 0,
-                        },
-                        dateText: {
-                          // color: 'white',
-                          fontSize: 18,
-                          fontWeight: 'bold',
-                          numberOfLines: 1,
-                          // left: -133,
-                          right: 50,
-                        },
-                      }}
-                      showIcon={false}
-                      onDateChange={date => {
-                        // console.log(date)
-                        this.getAge(date);
-                        this.setState({date: date});
-                      }}
-                    />
-              {/* <DatePicker1
-                style={{ width: width - 30, marginTop: 20 }}
+              <DatePicker
+                style={{ width: width - 45, marginTop: 20, marginLeft: 13, }}
                 date={this.state.dob}
                 mode="date"
-                // maxDate={new Date()}
+                androidMode='spinner'
+                maxDate={moment(new Date(), format).format(format)}
+
+                format={format}
                 placeholder="Select date"
                 confirmBtnText="Confirm"
                 cancelBtnText="Cancel"
-                customStyles={{
-                  dateIcon: {
+                iconComponent={<FontAwesome name="calendar-check-o" size={25} color="rgba(0,0,0,0.7)"
+                  style={{
                     position: "absolute",
-                    left: 0,
+                    left: 10,
                     top: 4,
                     marginLeft: 0,
-                  },
+                  }}
+                />}
+                customStyles={{
+                  // dateIcon: {
+                  //   position: "absolute",
+                  //   left: 0,
+                  //   top: 4,
+                  //   marginLeft: 0,
+                  // },
                   dateInput: {
-                    marginLeft: 36,
+                    // marginLeft: 5,
                   },
                   dateText: {
                     color: '#000',
                     placeholderTextColor: 'red',
-                    fontSize: 16 ,
+                    fontSize: 16,
                     // fontFamily: 'Gilroy-Bold',
                     numberOfLines: 1
                   },
-                  placeholderText:{
-                    fontSize: 16 ,
-                    color:'gray'
+                  placeholderText: {
+                    fontSize: 16,
+                    color: 'gray'
                   }
                   // ... You can check the source to find the other keys.
                 }}
                 onDateChange={(date) => {
-                  this.setState({ dob: date });
+                  this.setState({ dob: moment(date, format2).format(format2) });
                 }}
               /> */}
 
@@ -750,31 +724,41 @@ export default class home extends Component {
                 When did you/the patient first notice symtomps? (DD-MM-YYYY)
               </Label>
               <DatePicker
-                style={{ width: width - 30, marginVertical: 20 }}
+                style={{ width: width - 45,marginLeft: 13,marginVertical: 20  }}
                 date={this.state.first_symtomps}
-                mode="date"
+                mode="datetime"
+                androidMode='spinner'
                 placeholder="Select date"
-                maxDate={new Date()}
+                maxDate={moment(new Date(),format2).format(format2)}
                 confirmBtnText="Confirm"
                 cancelBtnText="Cancel"
-                customStyles={{
-                  dateIcon: {
+                format={format2}
+                iconComponent={<FontAwesome name="calendar-check-o" size={25} color="rgba(0,0,0,0.7)"
+                  style={{
                     position: "absolute",
-                    left: 0,
+                    left: 10,
                     top: 4,
                     marginLeft: 0,
-                  },
+                  }}
+                />}
+                customStyles={{
+                  // dateIcon: {
+                  //   position: "absolute",
+                  //   left: 0,
+                  //   top: 4,
+                  //   marginLeft: 0,
+                  // },
                   dateInput: {
-                    marginLeft: 36,
+                    // marginLeft: 36,
                   },
-                  placeholderText:{
-                    fontSize: 16 ,
-                    color:'gray'
+                  placeholderText: {
+                    fontSize: 16,
+                    color: 'gray'
                   }
                   // ... You can check the source to find the other keys.
                 }}
                 onDateChange={(date) => {
-                  this.setState({ first_symtomps: date });
+                  this.setState({ first_symtomps: moment(date, format2).format(format2) });
                 }}
               />
             </View>
@@ -786,31 +770,42 @@ export default class home extends Component {
                 condition? (DD-MM-YYYY)
               </Label>
               <DatePicker
-                style={{ width: width - 30, marginVertical: 20 }}
+                style={{ width: width - 45,marginLeft: 13,marginVertical: 20  }}
                 date={this.state.first_consult}
-                mode="date"
+                mode="datetime"
+                androidMode={'spinner'}
                 placeholder="Select date"
                 maxDate={new Date()}
+                format={format2}
                 confirmBtnText="Confirm"
                 cancelBtnText="Cancel"
+                iconComponent={<FontAwesome name="calendar-check-o" size={25} color="rgba(0,0,0,0.7)"
+                style={{
+                  position: "absolute",
+                  left: 10,
+                  top: 4,
+                  marginLeft: 0,
+                }}
+              />}
                 customStyles={{
-                  dateIcon: {
-                    position: "absolute",
-                    left: 0,
-                    top: 4,
-                    marginLeft: 0,
-                  },
-                  dateInput: {
-                    marginLeft: 36,
-                  },
-                  placeholderText:{
-                    fontSize: 16 ,
-                    color:'gray'
+                  // dateIcon: {
+                  //   position: "absolute",
+                  //   left: 0,
+                  //   top: 4,
+                  //   marginLeft: 0,
+                  // },
+                  // dateInput: {
+                  //   marginLeft: 36,
+                  // },
+                  placeholderText: {
+                    fontSize: 16,
+                    color: 'gray'
                   }
                   // ... You can check the source to find the other keys.
                 }}
+                
                 onDateChange={(date) => {
-                  this.setState({ first_consult: date });
+                  this.setState({ first_consult: moment(date, format2).format(format2) });
                 }}
               />
             </View>
@@ -847,31 +842,41 @@ export default class home extends Component {
                 If yes, when ? (DD-MM-YYYY)
               </Label>
               <DatePicker
-                style={{ width: width - 30, marginVertical: 20 }}
+                style={{ width: width - 45,marginLeft: 13,marginVertical: 20  }}
                 date={this.state.related_date}
-                mode="date"
+                mode="datetime"
+                androidMode={'spinner'}
+                iconComponent={<FontAwesome name="calendar-check-o" size={25} color="rgba(0,0,0,0.7)"
+                style={{
+                  position: "absolute",
+                  left: 10,
+                  top: 4,
+                  marginLeft: 0,
+                }}
+              />}
+              format={format2}
                 placeholder="Select date"
                 maxDate={new Date()}
                 confirmBtnText="Confirm"
                 cancelBtnText="Cancel"
                 customStyles={{
-                  dateIcon: {
-                    position: "absolute",
-                    left: 0,
-                    top: 4,
-                    marginLeft: 0,
-                  },
-                  dateInput: {
-                    marginLeft: 36,
-                  },
-                  placeholderText:{
-                    fontSize: 16 ,
-                    color:'gray'
+                  // dateIcon: {
+                  //   position: "absolute",
+                  //   left: 0,
+                  //   top: 4,
+                  //   marginLeft: 0,
+                  // },
+                  // dateInput: {
+                  //   marginLeft: 36,
+                  // },
+                  placeholderText: {
+                    fontSize: 16,
+                    color: 'gray'
                   }
                   // ... You can check the source to find the other keys.
                 }}
                 onDateChange={(date) => {
-                  this.setState({ related_date: date });
+                  this.setState({ related_date: moment(date, format2).format(format2) });
                 }}
               />
             </View>
@@ -918,31 +923,41 @@ export default class home extends Component {
                   Date (DD-MM-YYYY):
                 </Label>
                 <DatePicker
-                  style={{ width: width - 30, marginVertical: 20 }}
+                  style={{ width: width - 45,marginLeft: 13,marginVertical: 20  }}
                   date={this.state.doctor_date}
-                  mode="date"
+                  mode="datetime"
+                  androidMode={'spinner'}
+                  iconComponent={<FontAwesome name="calendar-check-o" size={25} color="rgba(0,0,0,0.7)"
+                  style={{
+                    position: "absolute",
+                    left: 10,
+                    top: 4,  
+                    marginLeft: 0,
+                  }}
+                />}
+                format={format2}
                   placeholder="Select date"
                   maxDate={new Date()}
                   confirmBtnText="Confirm"
                   cancelBtnText="Cancel"
                   customStyles={{
-                    dateIcon: {
-                      position: "absolute",
-                      left: 0,
-                      top: 4,
-                      marginLeft: 0,
-                    },
-                    dateInput: {
-                      marginLeft: 36,
-                    },
-                    placeholderText:{
-                      fontSize: 16 ,
-                      color:'gray'
+                    // dateIcon: {
+                    //   position: "absolute",
+                    //   left: 0,
+                    //   top: 4,
+                    //   marginLeft: 0,
+                    // },
+                    // dateInput: {
+                    //   marginLeft: 36,
+                    // },
+                    placeholderText: {
+                      fontSize: 16,
+                      color: 'gray'
                     }
                     // ... You can check the source to find the other keys.
                   }}
                   onDateChange={(date) => {
-                    this.setState({ doctor_date: date });
+                    this.setState({ doctor_date: moment(date, format2).format(format2) });
                   }}
                 />
               </View>
