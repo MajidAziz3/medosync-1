@@ -11,7 +11,7 @@ import {
   Image,
 } from "react-native";
 import DatePicker from "react-native-datepicker";
-
+import DatePicker1 from 'react-native-datepicker';
 import {
   Item,
   Input,
@@ -590,11 +590,52 @@ export default class home extends Component {
               >
                 Date of Birth
               </Label>
-              <DatePicker
+              <DatePicker1
+                      style={{width: '100%'}}
+                      date={this.state.date}
+                      mode="date"
+                      androidMode="spinner"
+                      format="ll"
+                      placeholder="Date of Birth"
+                      format="YYYY-MM-DD"
+                      confirmBtnText="Confirm"
+                      minDate={1960}
+                      maxDate={new Date()}
+                      cancelBtnText="Cancel"
+                      allowFontScaling
+                      customStyles={{
+                        placeholderText: {
+                          // fontFamily: sfRegular,
+                          fontSize: 18,
+                          // color: 'white',
+                          // left: -133,
+                          numberOfLines: 1,
+                        },
+                        dateInput: {
+                          height: '100%',
+                          borderWidth: 0,
+                        },
+                        dateText: {
+                          // color: 'white',
+                          fontSize: 18,
+                          fontWeight: 'bold',
+                          numberOfLines: 1,
+                          // left: -133,
+                          right: 50,
+                        },
+                      }}
+                      showIcon={false}
+                      onDateChange={date => {
+                        // console.log(date)
+                        this.getAge(date);
+                        this.setState({date: date});
+                      }}
+                    />
+              {/* <DatePicker1
                 style={{ width: width - 30, marginTop: 20 }}
                 date={this.state.dob}
                 mode="date"
-                maxDate={new Date()}
+                // maxDate={new Date()}
                 placeholder="Select date"
                 confirmBtnText="Confirm"
                 cancelBtnText="Cancel"
@@ -624,7 +665,7 @@ export default class home extends Component {
                 onDateChange={(date) => {
                   this.setState({ dob: date });
                 }}
-              />
+              /> */}
 
               <Item floatingLabel style={{ marginTop: 10 }}>
                 <Label style={{ marginHorizontal: 13, fontSize: 16 }}>
