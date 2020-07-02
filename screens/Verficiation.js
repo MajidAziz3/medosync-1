@@ -56,7 +56,7 @@ export default class Verficiation extends Component {
                     : "No"
                 }"
     ts_Date_When_Claimed_For_This_Illness_Before: "${
-                  this.props.route.params.item.related_date
+                  this.props.route.params.item.related_date?this.props.route.params.item.related_date:"1900-01-01 14:12"
                 }"
     Name_Of_Doctor_Fisrt_Attended_Referral: "${
                   this.props.route.params.item.name_of_doctor
@@ -188,6 +188,7 @@ this.props.route.params.item.confirmed == "1" ? "Yes" : "No"
       }).mutate({ mutation: query });
       if (data) {
         console.log("data>>>>>>>>>>>Succed", data);
+        this.props.navigation.navigate("Thanks",{signature:this.props.route.params.item.drawing})
         // return data;
       }
     } catch (error) {
